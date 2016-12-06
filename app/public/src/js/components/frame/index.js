@@ -1,4 +1,6 @@
 import React from 'react';
+import FileTree from './fileTree';
+import MutationsList from './mutationsList';
 
 class Frame extends React.Component {
   constructor(props) {
@@ -8,7 +10,8 @@ class Frame extends React.Component {
   render() {
     return (
       <div>
-        Frame
+        <FileTree />
+        <MutationsList />
       </div>
     );
   }

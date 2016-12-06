@@ -8,6 +8,7 @@ class FileTree extends React.Component {
     render() {
         return (
 			<div>
+        File Tree
 			</div>
 		);
     }

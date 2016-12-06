@@ -8,6 +8,7 @@ class MutationsList extends React.Component {
     render() {
         return (
 			<div>
+      Mutation List
 			</div>
 		);
     }
