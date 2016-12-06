@@ -151,14 +151,13 @@ const input = `1:LVR:0:POS:triangle.Triangle@classify:20:0 |==> 1
 149:STD:<CALL>:<NO-OP>:triangle.Triangle@classify:48:return Type.ISOSCELES; |==> return null;
 150:STD:<CALL>:<NO-OP>:triangle.Triangle@classify:50:return Type.INVALID; |==> return null;`
 
-function parse(str) {
-	let parsedArray = [];
+function parseMutationLog(str) {
+  let parsedArray = [];
 	for (let line of str.split('\n')) {
 		let lineArr = line.split(':');
-		console.log(lineArr);
-		console.log(lineArr[6])
 		let codeChange = lineArr[6].split(" |==> ");
-		parsedArray.push({
+
+    parsedArray.push({
 			'id' : lineArr[0],
 			'type' : lineArr[1],
 			'fromDef' : lineArr[2],
@@ -167,9 +166,8 @@ function parse(str) {
 			'from' : codeChange[0],
 			'to' : codeChange[1]
 		});
-
 	}
-	console.log(parsedArray)
+	return parsedArray;
 }
 
 parse(input);
