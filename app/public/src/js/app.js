@@ -3,5 +3,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-ReactDOM.render(<span>Hello!!!!!</span>, document.getElementById('app'))
+import Frame from './components/frame/index';
 
+ReactDOM.render(<Frame />, document.getElementById('app'))
