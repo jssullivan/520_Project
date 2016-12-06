@@ -5,6 +5,7 @@ const path = require("path");
 module.exports = {
   context: __dirname,
   entry: "./public/src/js/app.js",
+  target: 'electron',
   output: {
     path: path.join(__dirname, "./public/dist/js"),
     publicPath: "js/",
