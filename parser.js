@@ -153,21 +153,21 @@ const input = `1:LVR:0:POS:triangle.Triangle@classify:20:0 |==> 1
 
 function parseMutationLog(str) {
   let parsedArray = [];
-	for (let line of str.split('\n')) {
-		let lineArr = line.split(':');
-		let codeChange = lineArr[6].split(" |==> ");
+  for (let line of str.split('\n')) {
+    let lineArr = line.split(':');
+    let codeChange = lineArr[6].split(" |==> ");
 
     parsedArray.push({
-			'id' : lineArr[0],
-			'type' : lineArr[1],
-			'fromDef' : lineArr[2],
-			'toDef' : lineArr[3],
-			'line' : lineArr[4] + ":" + lineArr[5],
-			'from' : codeChange[0],
-			'to' : codeChange[1]
-		});
-	}
-	return parsedArray;
+    'id' : lineArr[0],
+    'type' : lineArr[1],
+    'fromDef' : lineArr[2],
+    'toDef' : lineArr[3],
+    'line' : lineArr[4] + ":" + lineArr[5],
+    'from' : codeChange[0],
+    'to' : codeChange[1]
+    });
+  }
+  return parsedArray;
 }
 
 parse(input);
