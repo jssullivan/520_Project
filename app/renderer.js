@@ -7,4 +7,4 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 
-ReactDOM.render(React.createElement('div', {}, 'hello from renderer'), document.getElementById('app'))
+ReactDOM.render(React.createElement(window.Frame), document.getElementById('app'));
