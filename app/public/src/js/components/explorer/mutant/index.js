@@ -8,11 +8,24 @@ class Mutant extends React.Component {
     }
 
     componentWillMount() {
-        this.setState({ expanded: false });
+        this.setState({ expanded: false, isExpanding: false });
+
+        window.document.addEventListener('contractMutants', () => {
+            this.setState({ expanded: false });
+        }, false);
     }
 
     toggle() {
+        if (!this.state.expanded) {
+            this.setState({ isExpanding: true });
+            this.contractOthers();
+        }
+
         this.setState({ expanded: !this.state.expanded });
+    }
+
+    contractOthers() {
+        window.document.dispatchEvent(new Event('contractMutants'));
     }
 
     render() {
