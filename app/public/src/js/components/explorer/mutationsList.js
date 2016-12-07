@@ -1,6 +1,6 @@
 import React from 'react';
 
-class FileTree extends React.Component {
+class MutationsList extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -8,10 +8,10 @@ class FileTree extends React.Component {
     render() {
         return (
 			<div>
-        File Tree
+                Mutation List
 			</div>
 		);
     }
 }
 
-export default FileTree;
+export default MutationsList;

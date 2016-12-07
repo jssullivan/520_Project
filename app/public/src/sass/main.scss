@@ -1,3 +1,24 @@
+$flex-levels: 1, 2, 3, 4;
+
 body {
   font-family: 'Roboto', sans-serif;
+}
+
+.column-layout {
+    display: flex;
+
+    @each $i in $flex-levels {
+        .column-#{$i} {
+            flex: $i;
+        }
+    }
+}
+
+.view {
+    position: absolute;
+    
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }

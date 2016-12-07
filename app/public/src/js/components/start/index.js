@@ -8,6 +8,7 @@ class Start extends React.Component {
     render() {
         return (
 			<div>
+                <div onClick={() => this.props.onChooseDirectory('test')}>Start</div>
 			</div>
 		);
     }
