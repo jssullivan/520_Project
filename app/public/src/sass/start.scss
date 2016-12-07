@@ -6,4 +6,16 @@
 
 #dir-chooser {
   margin-top:30px;
+
+  ul {
+    padding: 0;
+
+    li {
+      display: inline;
+      color: $body-color;
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
+    }
+  }
 }

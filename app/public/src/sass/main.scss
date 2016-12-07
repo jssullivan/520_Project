@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'mixins';
 
 body {
   font-family: 'Roboto', sans-serif;
@@ -10,6 +11,35 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   color: $body-color;
+}
+
+button {
+  background: transparent;
+  border: 2px solid lighten($body-color, 25);
+  border-radius: 4px;
+  padding: 5px 10px;
+  outline: none;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: 0.8em;
+  color: $body-color;
+
+  &:not([disabled]) {
+    cursor: pointer;
+    @include transition();
+    @include scaleHover()
+
+    &:hover {
+      border-color: darken($body-color, 0);
+    }
+  }
+
+  &.primary:not([disabled]) {
+    color: $accent-color;
+    border-color: $accent-color;
+  }
 }
 
 .column-layout {
@@ -41,5 +71,16 @@ p {
 
   &.center-align {
     text-align: center;
+  }
+}
+
+.animate {
+  @include transition();
+
+  &.fade {
+    opacity: 0;
+    &.in {
+      opacity: 1;
+    }
   }
 }

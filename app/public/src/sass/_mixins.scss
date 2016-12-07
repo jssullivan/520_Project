@@ -1,0 +1,18 @@
+@mixin transition($duration: 0.1s){
+  -webkit-transition: all $bezier $duration;
+  transition: all $bezier $duration;
+}
+
+@mixin scaleHover() {
+  @include transition();
+  transform: scale(1);
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:focus {
+    transform: scale(0.95);
+  }
+
+}
