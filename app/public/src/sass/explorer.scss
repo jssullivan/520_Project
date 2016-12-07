@@ -37,8 +37,9 @@
         li {
           padding: 5px;
           cursor: pointer;
-          @include scaleHover();
+          color: #a5a5a5;
 
+          &:hover { color: $body-color; }
           &.active {
             color: $accent-color;
           }
