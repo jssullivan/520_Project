@@ -17,6 +17,12 @@ class Start extends React.Component {
         setTimeout(() => this.setState({ visible: true }), 0);
     }
 
+    prettyDir(dir) {
+        if(!dir) return null;
+        let items = this.state.dir.split('/');
+        return `/${items[items.length - 1]}`;
+    }
+
     render() {
         return (
 			<div id="start" className={`container center-align animate fade ${this.state.visible ? 'in':''}`}>
@@ -26,12 +32,14 @@ class Start extends React.Component {
                 <div id="dir-chooser" className="container">
                     <ul>
                         <li>
-                            <button className="primary" onClick={() => this.openDialog()}>Choose Directory</button>
+                            <button className="primary" onClick={() => this.openDialog()}>
+                                {this.prettyDir(this.state.dir) || 'Choose Directory'}
+                            </button>
                         </li>
                         <li>then...</li>
                         <li>
                             <button 
-                                className="primary"
+                                className="secondary"
                                 onClick={() => this.props.onChooseDirectory(this.state.dir)}
                                 disabled={!this.state.dir}>
                                 Visualize

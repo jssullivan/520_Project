@@ -40,6 +40,10 @@ button {
     color: $accent-color;
     border-color: $accent-color;
   }
+  &.secondary:not([disabled]) {
+    color: #17ff00;
+    border-color: #00ffc4;
+  }
 }
 
 .column-layout {
