@@ -16,7 +16,7 @@ p {
 button {
   background: transparent;
   border: 2px solid lighten($body-color, 25);
-  border-radius: 4px;
+  border-radius: $border-radius;
   padding: 5px 10px;
   outline: none;
   font-family: 'Roboto', sans-serif;
@@ -63,15 +63,19 @@ button {
   left: 0;
   right: 0;
   bottom: 0;
+
+  & > *:not(.window-chrome) {
+    margin-top: -$chrome-height;
+  }
 }
 
 .window-chrome {
   -webkit-app-region: drag;
-  height: 38px;
+  height: $chrome-height;
 }
 
 .container {
-  padding: 15px;
+  padding: $global-padding;
 
   &.center-align {
     text-align: center;

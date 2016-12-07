@@ -1,0 +1,49 @@
+@import 'variables';
+@import 'mixins';
+
+#explorer {
+  
+}
+
+#file-tree, #mutation-list {
+  padding: 40px 15px 15px;
+}
+
+#file-tree {
+  background: #f3f3f5;
+  height: 100vh;
+  color: #636363;
+
+  ul {
+    list-style-type: none;
+    @include disableSelect();
+    cursor: default;
+
+    li {
+      font-size: 1em;
+      i { margin-right: 5px; }
+    }
+  }
+
+  & > ul {
+    margin: 0;
+    padding: 0;
+
+    li { 
+      ul {
+        padding-left: 5px;
+        padding-top: 5px;
+
+        li {
+          padding: 5px;
+          cursor: pointer;
+          @include scaleHover();
+
+          &.active {
+            color: $accent-color;
+          }
+        }
+      }
+    }
+  }
+}

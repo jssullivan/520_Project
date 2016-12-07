@@ -7,11 +7,15 @@ class MutationsList extends React.Component {
 
     render() {
         return (
-			<div>
-                Mutation List
+			<div id="mutation-list">
+                {this.props.selected}
 			</div>
 		);
     }
+}
+
+MutationsList.propTypes = {
+    selected: React.PropTypes.string.isRequired
 }
 
 export default MutationsList;
