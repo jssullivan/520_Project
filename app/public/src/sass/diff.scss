@@ -1,0 +1,13 @@
+@import 'variables';
+
+.diffs {
+    padding: $global-padding;
+}
+
+.diff {
+    background: $box-color;
+    border-radius: $border-radius;
+
+    font-family: 'Roboto Mono', monospace;
+    padding: $global-padding;
+}

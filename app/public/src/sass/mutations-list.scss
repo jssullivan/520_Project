@@ -59,12 +59,11 @@
                 color: $text-light;
 
                 %indicator {
-                    height: 10px;
-                    width: 10px;
+                    height: $indicator-size;
+                    width: $indicator-size;
 
                     margin-right: 5px;
-
-                    border-radius: 10px;
+                    border-radius: $indicator-size;
                 }
 
                 .indicator-live {
@@ -77,10 +76,23 @@
                     background: $killed-color;
                 }
             }
+
+            .expand-content {
+                opacity: 0;
+                transition: $transition;
+
+                .location {
+                    color: $text-light;
+                    font-weight: 200;
+                    font-size: 12px;
+
+                    margin-left: $indicator-size + 5px;
+                }
+            }
         }
 
-        .expanded {
-            height: 75px;
+        .expanded .expand-content {
+                opacity: 1;
         }
     }
 }
