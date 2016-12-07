@@ -1,4 +1,5 @@
 import React from 'react';
+import MutantOverview from './mutantOverview';
 
 class MutationsList extends React.Component {
     constructor(props) {
@@ -9,6 +10,10 @@ class MutationsList extends React.Component {
         return (
 			<div id="mutation-list">
                 {this.props.selected}
+                <MutantOverview 
+                    count={150}
+                    killed={30}
+                />
 			</div>
 		);
     }

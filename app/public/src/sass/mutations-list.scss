@@ -1,0 +1,14 @@
+@import 'variables';
+@import 'mixins';
+
+#mutation-overview {
+  margin-top: 10px;
+  background: #f3f3f5;
+  padding: $global-padding;
+  border-radius: $border-radius;
+
+  .metric {
+    &:first-child { margin-right: 10px; }
+    &:last-child { margin-left: 10px; }
+  }
+}

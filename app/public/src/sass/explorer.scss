@@ -2,7 +2,9 @@
 @import 'mixins';
 
 #explorer {
-  
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
 }
 
 #file-tree, #mutation-list {
@@ -21,7 +23,6 @@
 
     li {
       font-size: 1em;
-      i { margin-right: 5px; }
     }
   }
 

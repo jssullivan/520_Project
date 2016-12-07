@@ -13,6 +13,17 @@ p {
   color: $body-color;
 }
 
+i.fa {
+  margin-right: 5px;
+}
+
+.killed {
+  color: $killed-color;
+}
+.live {
+  color: $live-color;
+}
+
 button {
   background: transparent;
   border: 2px solid lighten($body-color, 25);
