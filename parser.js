@@ -1,5 +1,6 @@
 'use strict'
 const fs = require('fs');
+const path = require('path');
 
 function parseMutationLog(logData) {
   let mutatntStr = logData[0];
@@ -34,7 +35,7 @@ function parseMutationLog(logData) {
 
 function loadLogs(basePath) {
     var mutantPromise = new Promise ((resolve, reject) => {
-          fs.readFile(basePath + 'mutants.log', 'utf8', function(err, data) {
+          fs.readFile(path.resolve(basePath, 'mutants.log'), 'utf8', function(err, data) {
             if (err) {
               reject(err);
             } else {
@@ -44,7 +45,7 @@ function loadLogs(basePath) {
         }
     );
     var killedPromise = new Promise ((resolve, reject) => {
-          fs.readFile(basePath + 'killed.csv', 'utf8', function(err, data) {
+          fs.readFile(path.resolve(basePath, 'killed.csv'), 'utf8', function(err, data) {
             if (err) {
               reject(err);
             } else {

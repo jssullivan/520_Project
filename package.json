@@ -1,0 +1,21 @@
+{
+  "name": "cerebroapp",
+  "version": "1.0.0",
+  "description": "Mutation Visualization Tool",
+  "main": "parser.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jssullivan/520_Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jssullivan/520_Project/issues"
+  },
+  "homepage": "https://github.com/jssullivan/520_Project#readme",
+  "dependencies": {
+  }
+}
