@@ -1,6 +1,7 @@
 'use strict'
 const fs = require('fs');
 const path = require('path');
+const fsPromise = require('./fsPromise');
 
 function parseMutationLog(logData) {
   let mutatntStr = logData[0];
@@ -23,7 +24,9 @@ function parseMutationLog(logData) {
       'type' : lineArr[1],
       'fromDef' : lineArr[2],
       'toDef' : lineArr[3],
-      'line' : lineArr[4] + ":" + lineArr[5],
+      'class' : lineArr[4].split("@")[0],
+      'method' : lineArr[4].split("@")[1],
+      'lineNum' : lineArr[5],
       'from' : codeChange[0],
       'to' : codeChange[1],
       'status' : mutantStatus,
@@ -34,36 +37,13 @@ function parseMutationLog(logData) {
 }
 
 function loadLogs(basePath) {
-    var mutantPromise = new Promise ((resolve, reject) => {
-          fs.readFile(path.resolve(basePath, 'mutants.log'), 'utf8', function(err, data) {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(data)
-            }
-          });
-        }
-    );
-    var killedPromise = new Promise ((resolve, reject) => {
-          fs.readFile(path.resolve(basePath, 'killed.csv'), 'utf8', function(err, data) {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(data)
-            }
-          });
-        }
-    );
+    let mutantPromise = fsPromise.readFile(path.resolve(basePath, 'mutants.log'));
+    let killedPromise = fsPromise.readFile(path.resolve(basePath, 'killed.csv'));
     return Promise.all([mutantPromise, killedPromise])
 }
 
 module.exports = function (basePath) {
-  return new Promise ((resolve, reject) => {
-      loadLogs(basePath).then((data) => {
-        resolve(parseMutationLog(data));
-      }).catch((err) => {
-        reject(err);
-      });
-    }
-  )
+  return loadLogs(basePath).then((data) => {
+    return parseMutationLog(data);
+  });  
 }
