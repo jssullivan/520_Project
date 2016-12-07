@@ -1,24 +1,29 @@
-$flex-levels: 1, 2, 3, 4;
+@import 'variables';
 
 body {
   font-family: 'Roboto', sans-serif;
 }
 
 .column-layout {
-    display: flex;
+  display: flex;
 
-    @each $i in $flex-levels {
-        .column-#{$i} {
-            flex: $i;
-        }
+  @each $i in $flex-levels {
+    .column-#{$i} {
+      flex: $i;
     }
+  }
 }
 
 .view {
-    position: absolute;
-    
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.window-chrome {
+  -webkit-app-region: drag;
+  height: 38px;
 }

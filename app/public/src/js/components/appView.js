@@ -21,6 +21,8 @@ class AppView extends React.Component {
   render() {
     return (
       <div className='view'>
+        <div className='window-chrome'></div>
+
         {this.state.mutantsDirectory == null && <Start onChooseDirectory={this.directoryChosen} />}
         {this.state.mutantsDirectory != null && <Explorer />}
       </div>
