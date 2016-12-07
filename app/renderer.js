@@ -6,5 +6,10 @@
 
 const React = require('react');
 const ReactDOM = require('react-dom');
+// const {dialog} = require('electron').remote
+const electron = require('electron');
+
+// attach some electron things to our window object for use in React components
+window.electron = electron;
 
 ReactDOM.render(React.createElement(window.AppView), document.getElementById('app'));
