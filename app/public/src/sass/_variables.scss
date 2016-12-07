@@ -4,9 +4,13 @@ $global-padding: 15px;
 $chrome-height: 38px;
 $border-radius: 4px;
 
+$transition: 0.2s all;
+
 // colors
 $body-color: #757575;
 $accent-color: #0079ff;
 $secondary-color: #00ffc4;;
-$live-color: $accent-color;
-$killed-color: red;
+$killed-color: #FF6666;
+$live-color: #7ED321;
+$text-dark: #636363;
+$text-light: #a5a5a5;

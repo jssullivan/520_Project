@@ -2,13 +2,85 @@
 @import 'mixins';
 
 #mutation-overview {
-  margin-top: 10px;
-  background: #f3f3f5;
-  padding: $global-padding;
-  border-radius: $border-radius;
+    margin-top: 10px;
+    background: #f3f3f5;
+    padding: $global-padding;
+    border-radius: $border-radius;
 
-  .metric {
-    &:first-child { margin-right: 10px; }
-    &:last-child { margin-left: 10px; }
-  }
+    color: $text-dark;
+
+    .metric {
+        &:first-child { margin-right: 10px; }
+        &:last-child { margin-left: 10px; }
+    }
+}
+
+#mutation-list {
+    .selected-file {
+        color: $text-light;
+        font-weight: 700;
+        font-size: 18px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+            border: 1px solid lighten($body-color, 40);
+            border-bottom: none;
+
+            padding: $global-padding;
+
+            cursor: pointer;
+            transition: $transition;
+
+            height: 18px;
+
+            &:first-of-type {
+                border-top-left-radius: $border-radius;
+                border-top-right-radius: $border-radius;
+
+                border-bottom: none;
+            }
+
+            &:last-of-type {
+                border-bottom-left-radius: $border-radius;
+                border-bottom-right-radius: $border-radius;
+
+                border-bottom: 1px solid lighten($body-color, 40);
+            }
+
+            .title {
+                display: flex;
+                align-items: center;
+
+                font-weight: 400;
+                color: $text-light;
+
+                %indicator {
+                    height: 10px;
+                    width: 10px;
+
+                    margin-right: 5px;
+
+                    border-radius: 10px;
+                }
+
+                .indicator-live {
+                    @extend %indicator;
+                    background: $live-color;
+                }
+
+                .indicator-killed {
+                    @extend %indicator;
+                    background: $killed-color;
+                }
+            }
+        }
+
+        .expanded {
+            height: 75px;
+        }
+    }
 }
