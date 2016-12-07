@@ -11,3 +11,10 @@
     font-family: 'Roboto Mono', monospace;
     padding: $global-padding;
 }
+
+.diff-title {
+    color: $text-light;
+    font-size: 12px;
+
+    margin-bottom: 5px;
+}
