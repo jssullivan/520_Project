@@ -54,7 +54,8 @@ class Explorer extends React.Component {
 }
 
 Explorer.propTypes = {
-  directory: React.PropTypes.string.isRequired
+  directory: React.PropTypes.string.isRequired,
+  // mutationresults: React.PropTypes.array.isRequired
 };
 
 export default Explorer;
