@@ -14,8 +14,9 @@ class AppView extends React.Component {
     this.setState({ mutantsDirectory: null });
   }
 
-  directoryChosen(dir) {
-    electron.ipcRenderer.send('mutation-dir-chosen', dir);
+  directoryChosen(dirs) {
+    console.log("directory chosen");
+    electron.ipcRenderer.send('dirs-chosen', dirs);
     electron.ipcRenderer.once('mutation-parse-data', (event, response) => {
       this.setState({ mutantsDirectory: dir, mutationResults: response });
     });

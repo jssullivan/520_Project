@@ -69,8 +69,9 @@ app.on('activate', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-electron.ipcMain.on('mutation-dir-chosen', (event, dir) => {
-  console.log("Processing chosen mutation directory...");
+electron.ipcMain.on('dirs-chosen', (event, dirs) => {
+  console.log("Processing chosen directories...", dirs);
+  return; // TODO: handle sending both to parser?
   parser(dir).then((parsedMutations) => {
     console.log("Sending mutation results to UI...");
     event.sender.send('mutation-parse-data', parsedMutations);
