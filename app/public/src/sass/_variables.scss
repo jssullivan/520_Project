@@ -3,10 +3,16 @@ $bezier: cubic-bezier(.43,.84,.79,.99);
 $global-padding: 15px;
 $chrome-height: 38px;
 $border-radius: 4px;
+$indicator-size: 10px;
+
+$transition: 0.2s all;
 
 // colors
 $body-color: #757575;
 $accent-color: #0079ff;
 $secondary-color: #00ffc4;;
-$live-color: $accent-color;
-$killed-color: red;
+$killed-color: #FF6666;
+$live-color: #7ED321;
+$text-dark: #636363;
+$text-light: #a5a5a5;
+$box-color: #f3f3f5;

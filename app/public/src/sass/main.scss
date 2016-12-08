@@ -64,6 +64,22 @@ button {
     .column-#{$i} {
       flex: $i;
     }
+
+    .column-#{$i}-left {
+      flex: $i;
+      padding-left: $global-padding / 2;
+    }
+
+    .column-#{$i}-right {
+      flex: $i;
+      padding-right: $global-padding / 2;
+    }
+
+    .column-#{$i}-mid {
+      flex: $i;
+      padding-left: $global-padding / 2;
+      padding-right: $global-padding / 2;
+    }
   }
 }
 
