@@ -9,7 +9,7 @@ const url = require('url')
 
 const PUBLIC_DIR = 'public';
 
-const parser = require('../parser');
+const parser = require('./modules/parser');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
