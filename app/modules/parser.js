@@ -11,13 +11,13 @@ function parseMutationLog(logData) {
   let killedArr = killedStr.split('\n');
 
   for (let line of mutantStr.split('\n')) {
-    if (line == "") {
+    if (line === "") {
       break;
     }
 
     let lineArr = line.split(':');
     let codeChange = lineArr[6].split(" |==> ");
-    let mutantStatus = killedArr[1 + parseInt(lineArr[0])].split(',')[1];
+    let mutantStatus = killedArr[parseInt(lineArr[0]) - 1].split(',')[1];
 
     parsedArray.push({
       'id' : lineArr[0],
@@ -36,26 +36,10 @@ function parseMutationLog(logData) {
   return parsedArray;
 }
 
-const getMutantIds = mutantLog => {
-  let mutantIds = [];
+const createDictionary = (mutantLog, baseSrcDir) => {
+  let mutantIds = mutantLog.split('\n').map(line => line.split(':')[0]);
 
-  for (let line of mutantLog.split('\n')) {
-    if (line === '') {
-      break;
-    }
-
-    let lineArr = line.split(':');
-
-    mutantIds.push(lineArr[0]);
-  }
-
-  return mutantIds;
-};
-
-const createDictionary = (logData, baseSrcDir) => {
-  let mutantIds = getMutantIds(logData[0]);
-
-  let classPath = logData[0].split('\n')[0].split(':')[4].split('@')[0];
+  let classPath = mutantLog.split('\n')[0].split(':')[4].split('@')[0];
   let fileDir = classPath.replace('.', '/') + '.java';
 
   return fsPromise.readFile(path.resolve(baseSrcDir, fileDir)).then(data => {
@@ -79,13 +63,24 @@ const createDictionary = (logData, baseSrcDir) => {
 };
 
 function loadLogs(basePath) {
-    let mutantPromise = fsPromise.readFile(path.resolve(basePath, 'mutants.log'));
-    let killedPromise = fsPromise.readFile(path.resolve(basePath, 'killed.csv'));
-    return Promise.all([mutantPromise, killedPromise])
+  let mutantPromise = fsPromise.readFile(path.resolve(basePath, 'mutants.log'));
+  let killedPromise = fsPromise.readFile(path.resolve(basePath, 'killed.csv'));
+  return Promise.all([mutantPromise, killedPromise]);
 }
 
-module.exports = function (basePath) {
-  return loadLogs(basePath).then((data) => {
-    return parseMutationLog(data);
+module.exports = function(dirs) {
+  let logs = loadLogs(dirs.mutation).then(data => {
+    return data;
   });
-}
+
+  let dictionaryPromise = logs.then(data => {
+    return createDictionary(data[0], dirs.source);
+  });
+
+  return Promise.all([logs, dictionaryPromise]).then(data => {
+    return {
+      parsedMutations: data[0],
+      dictionary: data[1]
+    };
+  });
+};

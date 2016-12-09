@@ -71,10 +71,10 @@ app.on('activate', function () {
 
 electron.ipcMain.on('dirs-chosen', (event, dirs) => {
   console.log("Processing chosen directories...", dirs);
-  return; // TODO: handle sending both to parser?
-  parser(dir).then((parsedMutations) => {
+
+  parser(dirs).then(parsedData => {
     console.log("Sending mutation results to UI...");
-    event.sender.send('mutation-parse-data', parsedMutations);
+    event.sender.send('mutation-parse-data', parsedData);
   }).catch((err) => {
     console.log("Sending mutation failure to UI...");
     console.log('event', event);
