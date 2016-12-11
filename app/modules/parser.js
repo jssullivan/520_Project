@@ -79,7 +79,7 @@ module.exports = function(dirs) {
 
   return Promise.all([logs, dictionaryPromise]).then(data => {
     return {
-      parsedMutations: data[0],
+      parsedMutations: parseMutationLog(data[0]),
       dictionary: data[1]
     };
   });
