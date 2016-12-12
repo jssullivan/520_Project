@@ -31,6 +31,18 @@ class Explorer extends React.Component {
     this.setState({ selectedFile: name });
   }
 
+  getSelectedFileText() {
+    let selectedFile = this.state.selectedFile;
+    if(!selectedFile) return null;
+
+    var levels = selectedFile.split('.')
+    var classObj = this.props.mutationdictionary;
+    for(let level in levels) {
+      classObj = classObj[levels[level]]
+    }
+    return classObj.text;
+  }
+
   render() {
     return (
         <div id='explorer'>
@@ -46,6 +58,7 @@ class Explorer extends React.Component {
             <div className='column-3'>
               <MutantList
                 selected={this.state.selectedFile}
+                filetext={this.getSelectedFileText()}
                 mutants={this.props.mutationresults.filter((function(mutant){
                   return mutant.class === this.state.selectedFile;
                 }).bind(this))}/>

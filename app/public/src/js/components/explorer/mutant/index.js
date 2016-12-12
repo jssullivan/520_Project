@@ -52,11 +52,11 @@ class Mutant extends React.Component {
 
                     <div className='column-layout diffs'>
                         <div className='column-1-right'>
-                            <Diff title='Original'/>
+                            <Diff title='Original' text={this.props.filetext} />
                         </div>
 
                         <div className='column-1-left'>
-                            <Diff title='Mutated'/>
+                            <Diff title='Mutated' text={this.props.filetext} />
                         </div>
                     </div>
                 </div>

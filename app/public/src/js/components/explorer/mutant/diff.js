@@ -11,7 +11,7 @@ class Diff extends React.Component {
                 <div className='diff-title'>{this.props.title}</div>
 
     		    <div className='diff'>
-                    Diff View
+                    {this.props.text}
                 </div>
             </div>
 		);
@@ -19,7 +19,8 @@ class Diff extends React.Component {
 }
 
 Diff.propTypes = {
-    title: React.PropTypes.string.isRequired
+    title: React.PropTypes.string.isRequired,
+    text: React.PropTypes.string.isRequired
 };
 
 export default Diff;

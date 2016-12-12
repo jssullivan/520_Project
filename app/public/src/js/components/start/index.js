@@ -5,10 +5,10 @@ class Start extends React.Component {
         super(props);
         this.state = {};
         // TODO: remove, just for testing
-        // this.state = {
-        //     mutation_dir: '/Users/dylanfischler/Documents/projects/umass/520/triangle/mutation_results',
-        //     source_dir: '/Users/dylanfischler/Documents/projects/umass/520/triangle/src'
-        // }
+        this.state = {
+            mutation_dir: '/Users/dylanfischler/Documents/projects/umass/520/triangle/mutation_results',
+            source_dir: '/Users/dylanfischler/Documents/projects/umass/520/triangle/src'
+        }
     }
 
     openDialog(target) {
