@@ -1,6 +1,7 @@
 import React from 'react';
 import FileTree from './fileTree';
 import MutantList from './mutantList';
+import {parseDictionary} from '../../util/mutation';
 
 class Explorer extends React.Component {
   constructor(props) {
@@ -24,6 +25,8 @@ class Explorer extends React.Component {
     this.state = {
       selectedFile: this.fakeItems[0].name
     }
+
+    this.items = parseDictionary(this.props.mutationdictionary);
   }
 
   selectFile(name) {
@@ -37,7 +40,7 @@ class Explorer extends React.Component {
             <div className='column-1'>
               <FileTree
                 selected={this.state.selectedFile}
-                files={this.fakeItems}
+                files={this.items}
                 directory={this.props.directory}
                 selectFile={(name) => this.selectFile(name)} />
             </div>
@@ -55,7 +58,8 @@ class Explorer extends React.Component {
 
 Explorer.propTypes = {
   directory: React.PropTypes.string.isRequired,
-  // mutationresults: React.PropTypes.array.isRequired
+  mutationresults: React.PropTypes.array.isRequired,
+  mutationdictionary: React.PropTypes.object.isRequired
 };
 
 export default Explorer;
