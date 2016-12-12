@@ -47,7 +47,7 @@ class Explorer extends React.Component {
     return (
         <div id='explorer'>
           <div className='column-layout'>
-            <div className='column-1'>
+            <div className='column-1' style={{ height: '100vh' }}>
               <FileTree
                 selected={this.state.selectedFile}
                 files={this.items}
@@ -55,7 +55,7 @@ class Explorer extends React.Component {
                 selectFile={(name) => this.selectFile(name)} />
             </div>
 
-            <div className='column-3'>
+            <div className='column-3' style={{ height: '100vh' }}>
               <MutantList
                 selected={this.state.selectedFile}
                 filetext={this.getSelectedFileText()}

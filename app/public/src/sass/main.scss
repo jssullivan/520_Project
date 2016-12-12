@@ -63,6 +63,7 @@ button {
   @each $i in $flex-levels {
     .column-#{$i} {
       flex: $i;
+      overflow-x: hidden;
     }
 
     .column-#{$i}-left {
@@ -117,5 +118,18 @@ button {
     &.in {
       opacity: 1;
     }
+  }
+}
+
+.flex-fill-container {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+
+  .fill-head {
+    flex: 0 1 auto;
+  }
+  .fill-content {
+    flex: 1 1 auto;
   }
 }

@@ -51,12 +51,12 @@ class Mutant extends React.Component {
                     <div className='location'>{this.getLocation()}</div>
 
                     <div className='column-layout diffs'>
-                        <div className='column-1-right'>
-                            <Diff title='Original' text={this.props.filetext} />
+                        <div className='' style={{width: '50%'}}>
+                            <Diff title='Original' linenum={parseInt(this.props.lineNum)} text={this.props.filetext} />
                         </div>
 
-                        <div className='column-1-left'>
-                            <Diff title='Mutated' text={this.props.filetext} />
+                        <div className='' style={{width: '50%'}}>
+                            <Diff title='Mutated' linenum={parseInt(this.props.lineNum)} text={this.props.filetext} />
                         </div>
                     </div>
                 </div>

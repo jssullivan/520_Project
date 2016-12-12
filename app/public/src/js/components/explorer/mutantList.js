@@ -17,20 +17,23 @@ class MutationsList extends React.Component {
     }
 
     render() {
-        debugger;
         return (
-			<div id='mutation-list'>
+			<div id="mutation-list">
             {
                 (this.props.selected) ?
-                <div>
-                    <div className='selected-file'>{this.props.selected}</div>
-                    <MutantOverview
-                        count={this.props.mutants.length}
-                        killed={this.getKilledCount()}
-                    />
-                    <ul>
-                        {this.props.mutants.map(mutant => <Mutant filetext={this.props.filetext} key={mutant.id} {...mutant} />)}
-                    </ul>
+                <div className="container">
+                    <div>
+                        <div className="selected-file">{this.props.selected}</div>
+                        <MutantOverview
+                            count={this.props.mutants.length}
+                            killed={this.getKilledCount()}
+                        />
+                    </div>
+                    <div>
+                        <ul>
+                            {this.props.mutants.map(mutant => <Mutant filetext={this.props.filetext} key={mutant.id} {...mutant} />)}
+                        </ul>
+                    </div>
                 </div>:
                 <p>Select a class on the left to view it's mutants</p>
             }
@@ -41,7 +44,7 @@ class MutationsList extends React.Component {
 
 MutationsList.propTypes = {
     mutants: React.PropTypes.array.isRequired,
-    selected: React.PropTypes.string.isRequired
+    selected: React.PropTypes.string
 };
 
 export default MutationsList;

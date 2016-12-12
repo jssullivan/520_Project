@@ -77,7 +77,7 @@ class FileTree extends React.Component {
 
 FileTree.propTypes = {
     directory: React.PropTypes.string.isRequired,
-    selected: React.PropTypes.string.isRequired,
+    selected: React.PropTypes.string,
     files: React.PropTypes.array.isRequired,
     selectFile: React.PropTypes.func.isRequired
 };
