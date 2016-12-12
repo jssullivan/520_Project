@@ -5,16 +5,15 @@ class Start extends React.Component {
         super(props);
         this.state = {};
         // TODO: remove, just for testing
-        this.state = {
-            mutation_dir: '/Users/dylanfischler/Downloads/mutation_results/results/Numerics4j',
-            source_dir: '/Users/dylanfischler/Downloads/mutation_results/Numerics4j/src/main/java'
-        }
+        // this.state = {
+        //     mutation_dir: '/Users/dylanfischler/Documents/projects/umass/520/triangle/mutation_results',
+        //     source_dir: '/Users/dylanfischler/Documents/projects/umass/520/triangle/src'
+        // }
     }
 
     openDialog(target) {
         electron.remote.dialog.showOpenDialog({properties: ['openDirectory']}, (filePaths) => {
             if(filePaths) {
-                debugger;
                 let dir = filePaths[0];
                 this.setState({ [target]: dir });
             }

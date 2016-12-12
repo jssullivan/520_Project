@@ -40,9 +40,9 @@ class FileTree extends React.Component {
         return (
             <li 
                 id={`fileitem-${item.tree}`}
-                onClick={(item.type === FileType.CLASS) ? () => this.props.selectFile(item.name):null}
+                onClick={(item.type === FileType.CLASS) ? () => this.props.selectFile(item.tree):null}
                 key={i}
-                className={this.props.selected == item.name ? 'active':''}>
+                className={this.props.selected == item.tree ? 'active':''}>
                 {this.getIcon(item.type)} {item.name}
                 <ul>
                     {

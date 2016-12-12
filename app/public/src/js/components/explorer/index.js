@@ -22,9 +22,7 @@ class Explorer extends React.Component {
           method: 'classify', lineNum:20, from: 'a <= 0', to:'a < 0', status:'FAIL', killed: true}
     ]
 
-    this.state = {
-      selectedFile: this.fakeItems[0].name
-    }
+    this.state = {}
 
     this.items = parseDictionary(this.props.mutationdictionary);
   }
@@ -48,7 +46,9 @@ class Explorer extends React.Component {
             <div className='column-3'>
               <MutantList
                 selected={this.state.selectedFile}
-                mutants={this.fakeMutants}/>
+                mutants={this.props.mutationresults.filter((function(mutant){
+                  return mutant.class === this.state.selectedFile;
+                }).bind(this))}/>
             </div>
           </div>
         </div>

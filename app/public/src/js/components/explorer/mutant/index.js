@@ -6,7 +6,7 @@ class Mutant extends React.Component {
         super(props);
 
         this.toggle = this.toggle.bind(this);
-        this.expandedHeight = this.expandedHeight.bind(this);
+        this.expandedHeight = this.expandedHeight.bind(this)
     }
 
     componentWillMount() {
@@ -34,16 +34,21 @@ class Mutant extends React.Component {
         return 18 + this.expandContent.clientHeight;
     }
 
+    getLocation() {
+        let className = this.props.class.split('.');
+        return `${className[className.length - 1]}:${this.props.lineNum}`;
+    }
+
     render() {
         return (
 			<li onClick={this.toggle} className={this.state.expanded && 'expanded'} style={this.state.expanded ? {height: this.expandedHeight()} : null}>
                 <div className='title'>
                     <div className={this.props.killed ? 'indicator-killed' : 'indicator-live'}></div>
-                    Mutant {this.props.id}
+                    Mutant {this.props.id}: {this.props.type}
                 </div>
 
                 <div className='expand-content' ref={elem => this.expandContent = elem}>
-                    <div className='location'>HashMap:35</div>
+                    <div className='location'>{this.getLocation()}</div>
 
                     <div className='column-layout diffs'>
                         <div className='column-1-right'>
@@ -61,7 +66,7 @@ class Mutant extends React.Component {
 }
 
 Mutant.propTypes = {
-    id: React.PropTypes.number.isRequired
+    id: React.PropTypes.string.isRequired
 }
 
 export default Mutant;
