@@ -40,6 +40,7 @@
     "gulp-util": "^3.0.7",
     "history": "^3.0.0",
     "humps": "^1.1.0",
+    "lodash": "latest",
     "moment": "^2.15.2",
     "morgan": "~1.6.1",
     "node-sass": "^3.10.0",

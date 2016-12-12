@@ -1,14 +1,20 @@
 'use strict'
 const fs = require('fs');
+const _ = require('lodash');
 const path = require('path');
 const fsPromise = require('./fsPromise');
+
+// Filter out empty lines
+const removeEmptyLines = (lines) => {
+  return _.filter(lines, line => line.length > 0);
+}
 
 function parseMutationLog(logData) {
   let mutantStr = logData[0];
   let killedStr = logData[1];
 
   let parsedArray = [];
-  let killedArr = killedStr.split('\n');
+  let killedArr = removeEmptyLines(killedStr.split('\n'));
 
   for (let line of mutantStr.split('\n')) {
     if (line === "") {
@@ -17,7 +23,10 @@ function parseMutationLog(logData) {
 
     let lineArr = line.split(':');
     let codeChange = lineArr[6].split(" |==> ");
-    let mutantStatus = killedArr[parseInt(lineArr[0]) - 1].split(',')[1];
+
+    let mutantStatus = _.find(killedArr, killed => {
+      return parseInt(killed.split(',')[0]) === parseInt(lineArr[0]);
+    });
 
     parsedArray.push({
       'id' : lineArr[0],
@@ -33,33 +42,63 @@ function parseMutationLog(logData) {
       'killed' : mutantStatus == 'FAIL'
     });
   }
+
   return parsedArray;
 }
 
-const createDictionary = (mutantLog, baseSrcDir) => {
-  let mutantIds = mutantLog.split('\n').map(line => line.split(':')[0]);
-
-  let classPath = mutantLog.split('\n')[0].split(':')[4].split('@')[0];
-  let fileDir = classPath.replace('.', '/') + '.java';
-
-  return fsPromise.readFile(path.resolve(baseSrcDir, fileDir)).then(data => {
-    let classPaths = classPath.split('.');
-    let dictionary = {};
-    let parent = dictionary;
-
-    for (let i = 0; i < classPaths.length; ++i) {
-      parent[classPaths[i]] = {};
-      let child = parent[classPaths[i]];
-      parent = child;
-
-      if (i === classPaths.length - 1) {
-        parent.text = data;
-        parent.mutants = mutantIds;
-      }
+const getClassPaths = (mutantLog) => {
+  return _.map(mutantLog, line => {
+    // $ exists before @
+    if (line.indexOf('$') > -1 && line.indexOf('$') < line.indexOf('@')) {
+      return line.split(':')[4].split('$')[0];
+    }
+    // $ exists, but not @
+    else if (line.indexOf('$') > -1 && line.indexOf('@') < 0) {
+      return line.split(':')[4].split('$')[0];
     }
 
-    return dictionary;
+    // @ only exists
+    return line.split(':')[4].split('@')[0];
   });
+};
+
+// Find the mutant ids that belong to this classpath
+const getMutantIds = (mutantLog, classPath) => {
+  let mutantIds = [];
+  _.each(mutantLog, line => {
+    if (line.indexOf(classPath) > -1) {
+      mutantIds.push(line.split(':')[0]);
+    }
+  });
+
+  return mutantIds;
+};
+
+const createDictionary = (mutantLog, baseSrcDir) => {
+  // Ignore empty lines that may occur at the end of the file
+  let filteredMutantLog = removeEmptyLines(mutantLog.split('\n'));
+
+  // Get the unique classplaths from the mutants log file
+  let classPaths = _.uniq(getClassPaths(filteredMutantLog));
+
+  let dictionary = {};
+  let finalPromise;
+
+  _.each(classPaths, classPath => {
+    let filePath = classPath.replace(/\./g, '/') + '.java';
+    let fullPath = path.resolve(baseSrcDir, filePath);
+
+    finalPromise = fsPromise.readFile(fullPath).then(data => {
+      _.set(dictionary, classPath, {
+        text: data,
+        mutants: getMutantIds(filteredMutantLog, classPath)
+      });
+
+      return dictionary;
+    });
+  });
+
+  return finalPromise;
 };
 
 function loadLogs(basePath) {
@@ -73,11 +112,28 @@ module.exports = function(dirs) {
     return data;
   });
 
-  let dictionaryPromise = logs.then(data => {
+  let dictionary = logs.then(data => {
     return createDictionary(data[0], dirs.source);
   });
 
-  return Promise.all([logs, dictionaryPromise]).then(data => {
+  return Promise.all([logs, dictionary]).then(data => {
+    return {
+      parsedMutations: parseMutationLog(data[0]),
+      dictionary: data[1]
+    };
+  });
+};
+
+const test = (dirs) => {
+  let logs = loadLogs(dirs.mutation).then(data => {
+    return data;
+  });
+
+  let dictionary = logs.then(data => {
+    return createDictionary(data[0], dirs.source);
+  });
+
+  return Promise.all([logs, dictionary]).then(data => {
     return {
       parsedMutations: parseMutationLog(data[0]),
       dictionary: data[1]
