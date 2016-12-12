@@ -17,30 +17,34 @@ function parseMutationLog(logData) {
 
     let lineArr = line.split(':');
     let codeChange = lineArr[6].split(" |==> ");
-    let mutantStatus = killedArr[parseInt(lineArr[0]) - 1].split(',')[1];
+    let mutant = killedArr[parseInt(lineArr[0]) - 1];
+    if(mutant) { // TODO: not sure why this could be undefined but it was
+      let mutantStatus = mutant.split(',')[1];
 
-    parsedArray.push({
-      'id' : lineArr[0],
-      'type' : lineArr[1],
-      'fromDef' : lineArr[2],
-      'toDef' : lineArr[3],
-      'class' : lineArr[4].split("@")[0],
-      'method' : lineArr[4].split("@")[1],
-      'lineNum' : lineArr[5],
-      'from' : codeChange[0],
-      'to' : codeChange[1],
-      'status' : mutantStatus,
-      'killed' : mutantStatus == 'FAIL'
-    });
+      parsedArray.push({
+        'id' : lineArr[0],
+        'type' : lineArr[1],
+        'fromDef' : lineArr[2],
+        'toDef' : lineArr[3],
+        'class' : lineArr[4].split("@")[0],
+        'method' : lineArr[4].split("@")[1],
+        'lineNum' : lineArr[5],
+        'from' : codeChange[0],
+        'to' : codeChange[1],
+        'status' : mutantStatus,
+        'killed' : mutantStatus == 'FAIL'
+      });
+    }
   }
   return parsedArray;
 }
 
 const createDictionary = (mutantLog, baseSrcDir) => {
+
   let mutantIds = mutantLog.split('\n').map(line => line.split(':')[0]);
 
   let classPath = mutantLog.split('\n')[0].split(':')[4].split('@')[0];
-  let fileDir = classPath.replace('.', '/') + '.java';
+  let fileDir = classPath.replace(/\./g, '/') + '.java';
 
   return fsPromise.readFile(path.resolve(baseSrcDir, fileDir)).then(data => {
     let classPaths = classPath.split('.');
@@ -59,6 +63,8 @@ const createDictionary = (mutantLog, baseSrcDir) => {
     }
 
     return dictionary;
+  }).catch(error => {
+    console.log('error', error);
   });
 };
 
