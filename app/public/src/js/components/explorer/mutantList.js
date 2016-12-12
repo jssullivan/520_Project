@@ -18,24 +18,27 @@ class MutationsList extends React.Component {
 
     render() {
         return (
-			<div id="mutation-list">
+			<div id='mutation-list'>
             {
                 (this.props.selected) ?
-                <div className="container">
+                <div className='container'>
                     <div>
-                        <div className="selected-file">{this.props.selected}</div>
+                        <div className='selected-file'>{this.props.selected}</div>
                         <MutantOverview
                             count={this.props.mutants.length}
                             killed={this.getKilledCount()}
                         />
                     </div>
-                    <div>
+                    
+                    <div className='mutants-container '>
                         <ul>
                             {this.props.mutants.map(mutant => <Mutant filetext={this.props.filetext} key={mutant.id} {...mutant} />)}
                         </ul>
                     </div>
                 </div>:
-                <p>Select a class on the left to view it's mutants</p>
+                <div className='select-message'>
+                    <span>Select a Class to View its Mutants</span>
+                </div>
             }
 			</div>
 		);
