@@ -4,11 +4,13 @@ class Start extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        // TODO: remove, just for testing
+
         this.state = {
-            mutation_dir: '/Users/cameron/School/CS520/inClassProjects/triangle/mutation_results',
-            source_dir: '/Users/cameron/School/CS520/inClassProjects/triangle/src'
+            mutation_dir: localStorage.getItem('mutation_dir'),
+            source_dir: localStorage.getItem('source_dir')
         }
+
+        this.finally = this.finally.bind(this);
     }
 
     openDialog(target) {
@@ -28,6 +30,13 @@ class Start extends React.Component {
         if(!dir) return null;
         let items = dir.split('/');
         return `/${items[items.length - 1]}`;
+    }
+
+    finally() {
+        localStorage.setItem('mutation_dir', this.state.mutation_dir);
+        localStorage.setItem('source_dir', this.state.source_dir);
+
+        this.props.onChooseDirectory({source: this.state.source_dir, mutation: this.state.mutation_dir});
     }
 
     render() {
@@ -59,7 +68,7 @@ class Start extends React.Component {
                         <li>
                             <button
                                 className="secondary"
-                                onClick={() => this.props.onChooseDirectory({source: this.state.source_dir, mutation: this.state.mutation_dir})}
+                                onClick={this.finally}
                                 disabled={!this.state.mutation_dir || !this.state.source_dir}>
                                 Visualize
                             </button>

@@ -47,7 +47,7 @@ class Explorer extends React.Component {
     return (
         <div id='explorer'>
           <div className='column-layout'>
-            <div className='column-1' style={{ height: '100vh' }}>
+            <div className='column-1' style={{ height: '100vh', maxWidth: '250px' }}>
               <FileTree
                 selected={this.state.selectedFile}
                 files={this.items}
