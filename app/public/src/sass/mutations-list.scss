@@ -58,6 +58,8 @@
                 font-weight: 400;
                 color: $text-light;
 
+                @include disableSelect();
+
                 %indicator {
                     height: $indicator-size;
                     width: $indicator-size;

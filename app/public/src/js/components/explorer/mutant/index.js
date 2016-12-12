@@ -13,7 +13,13 @@ class Mutant extends React.Component {
         this.setState({ expanded: false, isExpanding: false });
 
         window.document.addEventListener('contractMutants', () => {
-            this.setState({ expanded: false });
+            if (this.state.expanded) {
+                this.setState({ expanded: false });
+            }
+
+            if (this.state.isExpanding) {
+                this.setState({ isExpanding: false });
+            }
         }, false);
     }
 
@@ -47,7 +53,7 @@ class Mutant extends React.Component {
                     Mutant {this.props.id}: {this.props.type}
                 </div>
 
-                <div className='expand-content' ref={elem => this.expandContent = elem}>
+                <div className='expand-content' ref={elem => this.expandContent = elem} style={!this.state.expanded ? {pointerEvents: 'none'} : null}>
                     <div className='location'>{this.getLocation()}</div>
 
                     <div className='column-layout diffs'>
