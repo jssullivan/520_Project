@@ -25,11 +25,11 @@ class Diff extends React.Component {
         let newLine = line.substring(0, mutStart) + wrapped + line.substring(mutEnd);
 
         codeLines[lineNum] = newLine;
-        return codeLines.join('\n');
+        return this.getShortView(codeLines.join('\n'));
     }
 
-    getShortView() {
-        let textLines = this.props.filetext.split('\n');
+    getShortView(code) {
+        let textLines = code.split('\n');
         let line = this.props.lineNum - 1;
 
         const findFirstLine = () => {
