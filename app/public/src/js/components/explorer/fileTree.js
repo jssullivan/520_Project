@@ -42,7 +42,7 @@ class FileTree extends React.Component {
                 id={`fileitem-${item.tree}`}
                 onClick={(item.type === FileType.CLASS) ? () => this.props.selectFile(item.tree):null}
                 key={i}
-                className={this.props.selected == item.tree ? 'active':''}>
+                className={`type-${item.type} ${this.props.selected == item.tree ? 'active':''}`}>
                 {this.getIcon(item.type)} {item.name}
                 <ul>
                     {
@@ -64,7 +64,7 @@ class FileTree extends React.Component {
         return (
 			<div id="file-tree">
                 <ul>
-                    <li>
+                    <li className={`type-DIR`}>
                         {this.getIcon('DIR')} {this.prettyDir()}
                         <ul>{this.renderFiles()}</ul>
                     </li>

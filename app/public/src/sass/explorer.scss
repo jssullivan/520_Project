@@ -24,6 +24,16 @@
 
     li {
       font-size: 1em;
+      white-space: nowrap;
+
+      &.type-CLASS {
+        cursor: pointer;
+
+        &:hover { color: $body-color; }
+        &.active {
+          color: $accent-color;
+        }
+      }
     }
   }
 
@@ -38,13 +48,7 @@
 
         li {
           padding: 5px;
-          cursor: pointer;
           color: $text-light;
-
-          &:hover { color: $body-color; }
-          &.active {
-            color: $accent-color;
-          }
         }
       }
     }
