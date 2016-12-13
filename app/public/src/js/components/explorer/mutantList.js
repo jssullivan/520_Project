@@ -16,6 +16,12 @@ class MutationsList extends React.Component {
         return killed;
     }
 
+    orderMutants(m1,m2) {
+        if(m1.killed === m2.killed) return 0;
+        if(m1.killed === false) return -1;
+        else return 1;
+    }
+
     render() {
         return (
 			<div id='mutation-list'>
@@ -32,7 +38,11 @@ class MutationsList extends React.Component {
                     
                     <div className='mutants-container '>
                         <ul>
-                            {this.props.mutants.map(mutant => <Mutant filetext={this.props.filetext} key={mutant.id} {...mutant} />)}
+                            {
+                                this.props.mutants
+                                .sort(this.orderMutants)
+                                .map(mutant => <Mutant filetext={this.props.filetext} key={mutant.id} {...mutant} />)
+                            }
                         </ul>
                     </div>
                 </div>:
