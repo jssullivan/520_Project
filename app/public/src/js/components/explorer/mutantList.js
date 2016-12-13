@@ -8,18 +8,38 @@ class MutationsList extends React.Component {
         super(props);
     }
 
+    getKilledCount() {
+        let killed = 0;
+        this.props.mutants.forEach((mutant) => {
+            if(mutant.killed) ++killed;
+        });
+        return killed;
+    }
+
     render() {
         return (
 			<div id='mutation-list'>
-                <div className='selected-file'>{this.props.selected}</div>
-                <MutantOverview
-                    count={150}
-                    killed={30}
-                />
-
-                <ul>
-                    {this.props.mutants.map(mutant => <Mutant key={mutant.id} {...mutant} />)}
-                </ul>
+            {
+                (this.props.selected) ?
+                <div className='container'>
+                    <div>
+                        <div className='selected-file'>{this.props.selected}</div>
+                        <MutantOverview
+                            count={this.props.mutants.length}
+                            killed={this.getKilledCount()}
+                        />
+                    </div>
+                    
+                    <div className='mutants-container '>
+                        <ul>
+                            {this.props.mutants.map(mutant => <Mutant filetext={this.props.filetext} key={mutant.id} {...mutant} />)}
+                        </ul>
+                    </div>
+                </div>:
+                <div className='select-message'>
+                    <span>Select a Class to View its Mutants</span>
+                </div>
+            }
 			</div>
 		);
     }
@@ -27,7 +47,7 @@ class MutationsList extends React.Component {
 
 MutationsList.propTypes = {
     mutants: React.PropTypes.array.isRequired,
-    selected: React.PropTypes.string.isRequired
-}
+    selected: React.PropTypes.string
+};
 
 export default MutationsList;

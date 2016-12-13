@@ -24,9 +24,12 @@ function parseMutationLog(logData) {
     let lineArr = line.split(':');
     let codeChange = lineArr[6].split(" |==> ");
 
-    let mutantStatus = _.find(killedArr, killed => {
+    // Find the line in killed.csv that matches the current mutant
+    let killedLine = _.find(killedArr, killed => {
       return parseInt(killed.split(',')[0]) === parseInt(lineArr[0]);
     });
+
+    let mutantStatus = killedLine ? killedLine.split(',')[0] : 'UNDETECTED';
 
     parsedArray.push({
       'id' : lineArr[0],
@@ -39,7 +42,7 @@ function parseMutationLog(logData) {
       'from' : codeChange[0],
       'to' : codeChange[1],
       'status' : mutantStatus,
-      'killed' : mutantStatus == 'FAIL'
+      'killed' : mutantStatus === 'FAIL'
     });
   }
 

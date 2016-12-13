@@ -1,6 +1,7 @@
 import React from 'react';
 import FileTree from './fileTree';
 import MutantList from './mutantList';
+import {parseDictionary} from '../../util/mutation';
 
 class Explorer extends React.Component {
   constructor(props) {
@@ -21,31 +22,46 @@ class Explorer extends React.Component {
           method: 'classify', lineNum:20, from: 'a <= 0', to:'a < 0', status:'FAIL', killed: true}
     ]
 
-    this.state = {
-      selectedFile: this.fakeItems[0].name
-    }
+    this.state = {}
+
+    this.items = parseDictionary(this.props.mutationdictionary);
   }
 
   selectFile(name) {
     this.setState({ selectedFile: name });
   }
 
+  getSelectedFileText() {
+    let selectedFile = this.state.selectedFile;
+    if(!selectedFile) return null;
+
+    var levels = selectedFile.split('.')
+    var classObj = this.props.mutationdictionary;
+    for(let level in levels) {
+      classObj = classObj[levels[level]]
+    }
+    return classObj.text;
+  }
+
   render() {
     return (
         <div id='explorer'>
           <div className='column-layout'>
-            <div className='column-1'>
+            <div className='column-1' style={{ height: '100vh', maxWidth: '250px' }}>
               <FileTree
                 selected={this.state.selectedFile}
-                files={this.fakeItems}
+                files={this.items}
                 directory={this.props.directory}
                 selectFile={(name) => this.selectFile(name)} />
             </div>
 
-            <div className='column-3'>
+            <div className='column-3' style={{ height: '100vh' }}>
               <MutantList
                 selected={this.state.selectedFile}
-                mutants={this.fakeMutants}/>
+                filetext={this.getSelectedFileText()}
+                mutants={this.props.mutationresults.filter((function(mutant){
+                  return mutant.class === this.state.selectedFile;
+                }).bind(this))}/>
             </div>
           </div>
         </div>
@@ -55,7 +71,8 @@ class Explorer extends React.Component {
 
 Explorer.propTypes = {
   directory: React.PropTypes.string.isRequired,
-  // mutationresults: React.PropTypes.array.isRequired
+  mutationresults: React.PropTypes.array.isRequired,
+  mutationdictionary: React.PropTypes.object.isRequired
 };
 
 export default Explorer;

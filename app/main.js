@@ -18,8 +18,8 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    minWidth: 800,
+    width: 1300,
+    minWidth: 1000,
     height: 600,
     minHeight: 600,
     titleBarStyle: 'hidden-inset'
@@ -76,8 +76,8 @@ electron.ipcMain.on('dirs-chosen', (event, dirs) => {
     console.log("Sending mutation results to UI...");
     event.sender.send('mutation-parse-data', parsedData);
   }).catch((err) => {
+    console.error(err);
     console.log("Sending mutation failure to UI...");
-    console.log('event', event);
     event.sender.send('mutation-parse-error', err)
   });
 });

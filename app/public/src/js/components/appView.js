@@ -21,7 +21,7 @@ class AppView extends React.Component {
       this.setState({
         mutantsDirectory: dirs.mutation,
         mutationResults: response.parsedMutations,
-        dictionary: response.dictionary
+        mutationDictionary: response.dictionary
       });
     });
     electron.ipcRenderer.once('mutation-parse-error', (event, error) => {
@@ -48,7 +48,13 @@ class AppView extends React.Component {
         <div className='window-chrome'></div>
 
         {this.state.mutantsDirectory == null && <Start onChooseDirectory={this.directoryChosen} />}
-        {this.state.mutantsDirectory != null && <Explorer directory={this.state.mutantsDirectory} mutationresults={this.state.mutationResults} />}
+        {
+          this.state.mutantsDirectory != null && 
+          <Explorer 
+            directory={this.state.mutantsDirectory} 
+            mutationresults={this.state.mutationResults} 
+            mutationdictionary={this.state.mutationDictionary} />
+        }
       </div>
     );
   }

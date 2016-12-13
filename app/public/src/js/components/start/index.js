@@ -4,6 +4,13 @@ class Start extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+
+        this.state = {
+            mutation_dir: localStorage.getItem('mutation_dir'),
+            source_dir: localStorage.getItem('source_dir')
+        }
+
+        this.finally = this.finally.bind(this);
     }
 
     openDialog(target) {
@@ -25,6 +32,13 @@ class Start extends React.Component {
         return `/${items[items.length - 1]}`;
     }
 
+    finally() {
+        localStorage.setItem('mutation_dir', this.state.mutation_dir);
+        localStorage.setItem('source_dir', this.state.source_dir);
+
+        this.props.onChooseDirectory({source: this.state.source_dir, mutation: this.state.mutation_dir});
+    }
+
     render() {
         return (
 			<div id="start" className={`container center-align animate fade ${this.state.visible ? 'in':''}`}>
@@ -34,27 +48,27 @@ class Start extends React.Component {
                 <div id="dir-chooser" className="container">
                     <ul>
                         <li>
-                            <button 
-                                className={`${this.state.mutation_dir ? 'primary':'secondary'}`} 
+                            <button
+                                className={`${this.state.mutation_dir ? 'primary':'secondary'}`}
                                 onClick={() => this.openDialog('mutation_dir')}>
                                 {this.prettyDir(this.state.mutation_dir) || 'Locate Mutation Results'}
                             </button>
                         </li>
                         <li>then...</li>
                         <li>
-                            <button 
-                                disabled={!this.state.mutation_dir} 
-                                className={`${this.state.source_dir ? 'primary':'secondary'}`} 
+                            <button
+                                disabled={!this.state.mutation_dir}
+                                className={`${this.state.source_dir ? 'primary':'secondary'}`}
                                 onClick={() => this.openDialog('source_dir')}>
                                 {this.prettyDir(this.state.source_dir) || 'Locate Source Directory'}
                             </button>
-                            
+
                         </li>
                         <li>finally...</li>
                         <li>
-                            <button 
+                            <button
                                 className="secondary"
-                                onClick={() => this.props.onChooseDirectory({source: this.state.source_dir, mutation: this.state.mutation_dir})}
+                                onClick={this.finally}
                                 disabled={!this.state.mutation_dir || !this.state.source_dir}>
                                 Visualize
                             </button>

@@ -6,14 +6,20 @@ class Mutant extends React.Component {
         super(props);
 
         this.toggle = this.toggle.bind(this);
-        this.expandedHeight = this.expandedHeight.bind(this);
+        this.expandedHeight = this.expandedHeight.bind(this)
     }
 
     componentWillMount() {
         this.setState({ expanded: false, isExpanding: false });
 
         window.document.addEventListener('contractMutants', () => {
-            this.setState({ expanded: false });
+            if (this.state.expanded) {
+                this.setState({ expanded: false });
+            }
+
+            if (this.state.isExpanding) {
+                this.setState({ isExpanding: false });
+            }
         }, false);
     }
 
@@ -34,24 +40,29 @@ class Mutant extends React.Component {
         return 18 + this.expandContent.clientHeight;
     }
 
+    getLocation() {
+        let className = this.props.class.split('.');
+        return `${className[className.length - 1]}:${this.props.lineNum}`;
+    }
+
     render() {
         return (
 			<li onClick={this.toggle} className={this.state.expanded && 'expanded'} style={this.state.expanded ? {height: this.expandedHeight()} : null}>
                 <div className='title'>
                     <div className={this.props.killed ? 'indicator-killed' : 'indicator-live'}></div>
-                    Mutant {this.props.id}
+                    Mutant {this.props.id}: {this.props.type}
                 </div>
 
-                <div className='expand-content' ref={elem => this.expandContent = elem}>
-                    <div className='location'>HashMap:35</div>
+                <div className='expand-content' ref={elem => this.expandContent = elem} style={!this.state.expanded ? {pointerEvents: 'none'} : null}>
+                    <div className='location'>{this.getLocation()}</div>
 
                     <div className='column-layout diffs'>
-                        <div className='column-1-right'>
-                            <Diff title='Original'/>
+                        <div className='' style={{width: '50%'}}>
+                            <Diff title='Original' linenum={parseInt(this.props.lineNum)} text={this.props.filetext} />
                         </div>
 
-                        <div className='column-1-left'>
-                            <Diff title='Mutated'/>
+                        <div className='' style={{width: '50%'}}>
+                            <Diff title='Mutated' linenum={parseInt(this.props.lineNum)} text={this.props.filetext} />
                         </div>
                     </div>
                 </div>
@@ -61,7 +72,7 @@ class Mutant extends React.Component {
 }
 
 Mutant.propTypes = {
-    id: React.PropTypes.number.isRequired
+    id: React.PropTypes.string.isRequired
 }
 
 export default Mutant;
