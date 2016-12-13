@@ -8,12 +8,26 @@
   }
 }
 
+
+
 .diff {
   background: $box-color;
   border-radius: $border-radius;
   font-family: 'Roboto Mono', monospace;
   padding: $global-padding;
-  overflow-x: scroll;
+  overflow-x: scroll;  
+}
+
+.mutant {
+  display: inline-block;
+
+  &.original {
+    background-color: #7ED321;
+  }
+
+  &.mutated {
+    background-color: #f66;
+  }
 }
 
 .diff-title {

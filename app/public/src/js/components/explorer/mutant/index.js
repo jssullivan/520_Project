@@ -46,7 +46,6 @@ class Mutant extends React.Component {
     }
 
     render() {
-        debugger;
         return (
 			<li onClick={this.toggle} className={this.state.expanded && 'expanded'} style={this.state.expanded ? {height: this.expandedHeight()} : null}>
                 <div className='title'>
@@ -59,11 +58,11 @@ class Mutant extends React.Component {
 
                     <div className='column-layout diffs'>
                         <div className='' style={{width: '50%'}}>
-                            <Diff title='Original' linenum={parseInt(this.props.lineNum)} text={this.props.filetext} />
+                            <Diff difftype="original" title='Original' {...this.props} />
                         </div>
 
                         <div className='' style={{width: '50%'}}>
-                            <Diff title='Mutated' linenum={parseInt(this.props.lineNum)} text={this.props.filetext} />
+                            <Diff difftype="mutated" title='Mutated' {...this.props} />
                         </div>
                     </div>
                 </div>

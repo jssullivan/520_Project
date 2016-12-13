@@ -7,9 +7,30 @@ class Diff extends React.Component {
         this.viewSize = 20;
     }
 
+    highlightMutation(code) {
+        let codeLines = code.split('\n');
+        let lineNum = parseInt(this.props.lineNum) - 1;
+        let line = codeLines[lineNum];
+        let mutStart = line.indexOf(this.props.from);
+        let mutEnd = mutStart + this.props.from.length;
+
+        let mutation;
+        if(this.props.difftype === 'original') {
+            mutation = this.props.from;
+        } else {
+            mutation = this.props.to;
+        }
+
+        let wrapped = `<span class="mutant ${this.props.difftype}">${mutation}</span>`;
+        let newLine = line.substring(0, mutStart) + wrapped + line.substring(mutEnd);
+
+        codeLines[lineNum] = newLine;
+        return codeLines.join('\n');
+    }
+
     getShortView() {
-        let textLines = this.props.text.split('\n');
-        let line = this.props.linenum - 1;
+        let textLines = this.props.filetext.split('\n');
+        let line = this.props.lineNum - 1;
 
         const findFirstLine = () => {
             let firstLine = line;
@@ -38,19 +59,12 @@ class Diff extends React.Component {
         return (
             <div id="diff">
                 <div className='diff-title'>{this.props.title}</div>
-
-    		    <Highlight className='java'>
-                  {this.getShortView()}
-                </Highlight>
+                <pre className="diff">
+                    <code dangerouslySetInnerHTML={{__html: this.highlightMutation(this.props.filetext)}} />
+                </pre>
             </div>
 		);
     }
 }
-
-Diff.propTypes = {
-    title: React.PropTypes.string.isRequired,
-    text: React.PropTypes.string.isRequired,
-    linenum: React.PropTypes.number.isRequired
-};
 
 export default Diff;
