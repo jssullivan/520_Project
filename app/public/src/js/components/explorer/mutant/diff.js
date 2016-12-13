@@ -9,8 +9,29 @@ class Diff extends React.Component {
 
     getShortView() {
         let textLines = this.props.text.split('\n');
-        let line = this.props.linenum;
-        return textLines.slice(line-this.viewSize/2, line+this.viewSize/2+1).join('\n')
+        let line = this.props.linenum - 1;
+
+        const findFirstLine = () => {
+            let firstLine = line;
+            for(let i = line; i >= 0; --i) {
+                let currLine = textLines[i].replace(/\s+/, '');
+                if(currLine.length < 1) return i;
+            }
+            return 0;
+        }
+        const findLastLine = () => {
+            let lastLine = line;
+            for(let i = line; i < textLines.length; ++i) {
+                let currLine = textLines[i].replace(/\s+/, '');
+                if(currLine.length < 1) return i;
+            }
+            return textLines.length - 1;
+        }
+
+        let first = findFirstLine(line);
+        let last = findLastLine(line);
+
+        return textLines.slice(first, last + 1).join('\n');
     }
 
     render() {

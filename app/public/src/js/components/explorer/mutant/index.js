@@ -46,6 +46,7 @@ class Mutant extends React.Component {
     }
 
     render() {
+        debugger;
         return (
 			<li onClick={this.toggle} className={this.state.expanded && 'expanded'} style={this.state.expanded ? {height: this.expandedHeight()} : null}>
                 <div className='title'>
