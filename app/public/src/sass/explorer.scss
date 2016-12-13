@@ -14,6 +14,7 @@
 #file-tree {
   background: $box-color;
   height: 100vh;
+  overflow: scroll;
   color: $text-dark;
 
   ul {
