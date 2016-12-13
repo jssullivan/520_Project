@@ -31,7 +31,7 @@ function parseMutationLog(logData) {
 
     let mutantStatus = killedLine ? killedLine.split(',')[1] : 'UNDETECTED';
     parsedArray.push({
-      'id' : lineArr[0],
+      'id' : parseInt(lineArr[0]),
       'type' : lineArr[1],
       'fromDef' : lineArr[2],
       'toDef' : lineArr[3],

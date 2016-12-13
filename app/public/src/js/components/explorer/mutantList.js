@@ -17,7 +17,7 @@ class MutationsList extends React.Component {
     }
 
     orderMutants(m1,m2) {
-        if(m1.killed === m2.killed) return 0;
+        if(m1.killed === m2.killed) return m1.id > m2.id ? 1 : -1;
         if(m1.killed === false) return -1;
         else return 1;
     }

@@ -50,7 +50,7 @@ class Mutant extends React.Component {
 			<li onClick={this.toggle} className={this.state.expanded && 'expanded'} style={this.state.expanded ? {height: this.expandedHeight()} : null}>
                 <div className='title'>
                     <div className={this.props.killed ? 'indicator-killed' : 'indicator-live'}></div>
-                    {this.props.id}@{this.props.method}
+                    {this.props.id}{this.props.method ? "@" + this.props.method : ""}
                 </div>
 
                 <div className='expand-content' ref={elem => this.expandContent = elem} style={!this.state.expanded ? {pointerEvents: 'none'} : null}>
