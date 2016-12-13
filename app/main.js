@@ -74,6 +74,7 @@ electron.ipcMain.on('dirs-chosen', (event, dirs) => {
 
   parser(dirs).then(parsedData => {
     console.log("Sending mutation results to UI...");
+    console.log(parsedData);
     event.sender.send('mutation-parse-data', parsedData);
   }).catch((err) => {
     console.error(err);
